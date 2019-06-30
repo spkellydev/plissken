@@ -1,17 +1,19 @@
 ﻿namespace Plissken.CodeAnalysis
 {
-    enum SyntaxKind
+    public enum SyntaxKind
     {
-        NumberToken,
+        // tokens
+        BadToken,
+        EOFToken,
         WhitespaceToken,
+        NumberToken,
         PlusToken,
         MinusToken,
         StarToken,
         ForwardSlashToken,
         OpenParenToken,
         CloseParenToken,
-        EOFToken,
-        BadToken,
+        // expressions
         NumberExpression,
         BinaryExpression,
         ParenExpression

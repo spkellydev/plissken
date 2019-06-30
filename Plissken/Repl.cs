@@ -14,11 +14,11 @@ namespace Plissken
     // 1   *
     //    / \
     //   2   3
-    class Repl
+    internal static class Repl
     {
         static void Main(string[] args)
         {
-            bool showTree = false;
+            var showTree = false;
             while (true)
             {
                 Console.Write("> ");
@@ -86,7 +86,7 @@ namespace Plissken
             Console.WriteLine();
 
             var lastChild = node.GetChildren().LastOrDefault();
-            indent += isLast ? "    " : "│   ";
+            indent += isLast ? "   " : "│  ";
 
             foreach (var child in node.GetChildren())
                 PrettyPrint(child, indent, child == lastChild);

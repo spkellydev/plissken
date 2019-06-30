@@ -2,7 +2,7 @@
 
 namespace Plissken.CodeAnalysis
 {
-    sealed class ParenExpressionSyntax : ExpressionSyntax
+    public sealed class ParenExpressionSyntax : ExpressionSyntax
     {
         public ParenExpressionSyntax(SyntaxToken openParenToken, ExpressionSyntax expression, SyntaxToken closeParenToken)
         {
