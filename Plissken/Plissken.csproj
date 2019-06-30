@@ -55,6 +55,7 @@
     <Compile Include="CodeAnalysis\SyntaxPrecedence.cs" />
     <Compile Include="CodeAnalysis\SyntaxToken.cs" />
     <Compile Include="CodeAnalysis\SyntaxTree.cs" />
+    <Compile Include="CodeAnalysis\UnaryExpressionSyntax.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repl.cs" />
   </ItemGroup>

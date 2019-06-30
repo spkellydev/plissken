@@ -16,6 +16,7 @@
         // expressions
         LiteralExpression,
         BinaryExpression,
-        ParenExpression
+        ParenExpression,
+        UnarySyntax
     }
 }
