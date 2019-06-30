@@ -47,7 +47,7 @@
     <Compile Include="CodeAnalysis\Evaluator.cs" />
     <Compile Include="CodeAnalysis\ExpressionSyntax.cs" />
     <Compile Include="CodeAnalysis\Lexer.cs" />
-    <Compile Include="CodeAnalysis\NumberExpressionSyntax.cs" />
+    <Compile Include="CodeAnalysis\LiteralExpressionSyntax.cs" />
     <Compile Include="CodeAnalysis\ParenExpressionSyntax.cs" />
     <Compile Include="CodeAnalysis\Parser.cs" />
     <Compile Include="CodeAnalysis\SyntaxKind.cs" />
