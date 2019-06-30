@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plissken.CodeAnalysis;
+using Plissken.CodeAnalysis.Syntax;
 
 namespace Plissken
 {

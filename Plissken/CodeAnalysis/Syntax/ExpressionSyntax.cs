@@ -1,4 +1,4 @@
-﻿namespace Plissken.CodeAnalysis
+﻿namespace Plissken.CodeAnalysis.Syntax
 {
     public abstract class ExpressionSyntax : SyntaxNode { }
 }

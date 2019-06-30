@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
+using Plissken.CodeAnalysis.Syntax;
 
 namespace Plissken.CodeAnalysis
 {
@@ -20,12 +21,12 @@ namespace Plissken.CodeAnalysis
 
         private int EvaluateExpression(ExpressionSyntax node)
         {
-            // BinaryExpression
-            // NumberExpression
             switch (node)
             {
+                // LiteralExpression
                 case LiteralExpressionSyntax n:
                     return (int)n.NumberToken.Value;
+                // UnaryExpression
                 case UnaryExpressionSyntax u:
                     {
                         var operand = EvaluateExpression(u.Operand);
@@ -40,23 +41,28 @@ namespace Plissken.CodeAnalysis
                         }
                     }
 
+                // BinaryExpression
                 case BinaryExpressionSyntax b:
                     {
                         var left = EvaluateExpression(b.Left);
                         var right = EvaluateExpression(b.Right);
 
-                        if (b.OperatorToken.Kind == SyntaxKind.PlusToken)
-                            return left + right;
-                        else if (b.OperatorToken.Kind == SyntaxKind.MinusToken)
-                            return left - right;
-                        else if (b.OperatorToken.Kind == SyntaxKind.StarToken)
-                            return left * right;
-                        else if (b.OperatorToken.Kind == SyntaxKind.ForwardSlashToken)
-                            return left / right;
-                        else
-                            throw new Exception($"ERROR: Unexpected binary operator {b.OperatorToken.Kind}");
+                        switch (b.OperatorToken.Kind)
+                        {
+                            case SyntaxKind.PlusToken:
+                                return left + right;
+                            case SyntaxKind.MinusToken:
+                                return left - right;
+                            case SyntaxKind.StarToken:
+                                return left * right;
+                            case SyntaxKind.ForwardSlashToken:
+                                return left / right;
+                            default:
+                                throw new Exception($"ERROR: Unexpected binary operator {b.OperatorToken.Kind}");
+                        }
                     }
 
+                // ParenExpression
                 case ParenExpressionSyntax p:
                     return EvaluateExpression(p.Expression);
                 default:

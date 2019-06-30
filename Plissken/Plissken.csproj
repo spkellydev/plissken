@@ -43,19 +43,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeAnalysis\BinaryExpressionSyntax.cs" />
+    <Compile Include="CodeAnalysis\Syntax\BinaryExpressionSyntax.cs" />
     <Compile Include="CodeAnalysis\Evaluator.cs" />
-    <Compile Include="CodeAnalysis\ExpressionSyntax.cs" />
-    <Compile Include="CodeAnalysis\Lexer.cs" />
-    <Compile Include="CodeAnalysis\LiteralExpressionSyntax.cs" />
-    <Compile Include="CodeAnalysis\ParenExpressionSyntax.cs" />
-    <Compile Include="CodeAnalysis\Parser.cs" />
-    <Compile Include="CodeAnalysis\SyntaxKind.cs" />
-    <Compile Include="CodeAnalysis\SyntaxNode.cs" />
-    <Compile Include="CodeAnalysis\SyntaxPrecedence.cs" />
-    <Compile Include="CodeAnalysis\SyntaxToken.cs" />
-    <Compile Include="CodeAnalysis\SyntaxTree.cs" />
-    <Compile Include="CodeAnalysis\UnaryExpressionSyntax.cs" />
+    <Compile Include="CodeAnalysis\Syntax\ExpressionSyntax.cs" />
+    <Compile Include="CodeAnalysis\Syntax\Lexer.cs" />
+    <Compile Include="CodeAnalysis\Syntax\LiteralExpressionSyntax.cs" />
+    <Compile Include="CodeAnalysis\Syntax\ParenExpressionSyntax.cs" />
+    <Compile Include="CodeAnalysis\Syntax\Parser.cs" />
+    <Compile Include="CodeAnalysis\Syntax\SyntaxKind.cs" />
+    <Compile Include="CodeAnalysis\Syntax\SyntaxNode.cs" />
+    <Compile Include="CodeAnalysis\Syntax\SyntaxPrecedence.cs" />
+    <Compile Include="CodeAnalysis\Syntax\SyntaxToken.cs" />
+    <Compile Include="CodeAnalysis\Syntax\SyntaxTree.cs" />
+    <Compile Include="CodeAnalysis\Syntax\UnaryExpressionSyntax.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repl.cs" />
   </ItemGroup>
