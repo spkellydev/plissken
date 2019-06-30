@@ -52,6 +52,7 @@
     <Compile Include="CodeAnalysis\Parser.cs" />
     <Compile Include="CodeAnalysis\SyntaxKind.cs" />
     <Compile Include="CodeAnalysis\SyntaxNode.cs" />
+    <Compile Include="CodeAnalysis\SyntaxPrecedence.cs" />
     <Compile Include="CodeAnalysis\SyntaxToken.cs" />
     <Compile Include="CodeAnalysis\SyntaxTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
