@@ -29,7 +29,7 @@ namespace Plissken.CodeAnalysis
             _position++;
         }
 
-        public SyntaxToken NextToken()
+        public SyntaxToken Lex()
         {
             // <EOF>
             if (_position >= _text.Length)
