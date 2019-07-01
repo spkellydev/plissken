@@ -14,6 +14,12 @@ Plissken is an attempt at creating a functional language to be used interoperati
 - [x] ! <not> operator
 - [x] && <and> operator
 - [x] || <or> operator
-- [ ] == <equal> operator
+- [x] == <equal> operator
 - [ ] != <not-equal> operator
 - [ ] Everything else
+
+### WIP
+
+### Inspiration
+
+Source code is built to resemble the [https://github.com/dotnet/roslyn/tree/master/src/Compilers/CSharp/Portable](Roslyn APIs) and bootstrap a language compiler from scratch
