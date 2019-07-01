@@ -90,12 +90,23 @@ namespace Plissken.CodeAnalysis.Syntax
 
         private ExpressionSyntax ParsePrimaryExpression()
         {
-            if (Current.Kind == SyntaxKind.OpenParenToken)
+            switch (Current.Kind)
             {
-                var left = NextToken();
-                var expression = ParseExpression();
-                var right = MatchToken(SyntaxKind.CloseParenToken);
-                return new ParenExpressionSyntax(left, expression, right);
+                case SyntaxKind.OpenParenToken:
+                {
+                    var left = NextToken();
+                    var expression = ParseExpression();
+                    var right = MatchToken(SyntaxKind.CloseParenToken);
+                    return new ParenExpressionSyntax(left, expression, right);
+                }
+
+                case SyntaxKind.TrueKeyword:
+                case SyntaxKind.FalseKeyword:
+                {
+                    var keywordToken = NextToken();
+                    var value = Current.Kind == SyntaxKind.TrueKeyword;
+                    return new LiteralExpressionSyntax(keywordToken, value);
+                }
             }
             var numberToken = MatchToken(SyntaxKind.NumberToken);
             return new LiteralExpressionSyntax(numberToken);

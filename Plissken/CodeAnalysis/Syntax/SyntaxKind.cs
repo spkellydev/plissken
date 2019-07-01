@@ -13,10 +13,14 @@
         ForwardSlashToken,
         OpenParenToken,
         CloseParenToken,
+        IdentifierToken,
+        // keywords
+        FalseKeyword,
+        TrueKeyword,
         // expressions
         LiteralExpression,
         BinaryExpression,
         ParenExpression,
-        UnaryExpression
+        UnaryExpression,
     }
 }

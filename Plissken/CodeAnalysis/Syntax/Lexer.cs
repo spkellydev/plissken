@@ -61,6 +61,19 @@ namespace Plissken.CodeAnalysis.Syntax
                 var text = _text.Substring(start, length);
                 return new SyntaxToken(SyntaxKind.WhitespaceToken, start, text, null);
             }
+            // <boolean>
+            if (char.IsLetter(Current))
+            {
+                var start = _position;
+                while (char.IsLetter(Current))
+                    Next();
+
+                var length = _position - start;
+                var text = _text.Substring(start, length);
+                var kind = SyntaxRules.GetKeywordKind(text);
+                return new SyntaxToken(kind, start, text, null);
+            }
+
             // <operator> + - / ( )
             switch (Current)
             {

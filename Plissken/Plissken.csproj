@@ -44,6 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeAnalysis\Binding\Binder.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundBinaryExpression.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundBinaryOperatorKind.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundExpression.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundLiteralExpression.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundNode.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundNodeKind.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundUnaryOperatorKind.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundUrnaryExpression.cs" />
     <Compile Include="CodeAnalysis\Syntax\BinaryExpressionSyntax.cs" />
     <Compile Include="CodeAnalysis\Evaluator.cs" />
     <Compile Include="CodeAnalysis\Syntax\ExpressionSyntax.cs" />
@@ -53,7 +61,7 @@
     <Compile Include="CodeAnalysis\Syntax\Parser.cs" />
     <Compile Include="CodeAnalysis\Syntax\SyntaxKind.cs" />
     <Compile Include="CodeAnalysis\Syntax\SyntaxNode.cs" />
-    <Compile Include="CodeAnalysis\Syntax\SyntaxPrecedence.cs" />
+    <Compile Include="CodeAnalysis\Syntax\SyntaxRules.cs" />
     <Compile Include="CodeAnalysis\Syntax\SyntaxToken.cs" />
     <Compile Include="CodeAnalysis\Syntax\SyntaxTree.cs" />
     <Compile Include="CodeAnalysis\Syntax\UnaryExpressionSyntax.cs" />

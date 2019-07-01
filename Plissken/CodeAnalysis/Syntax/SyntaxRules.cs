@@ -1,6 +1,8 @@
-﻿namespace Plissken.CodeAnalysis.Syntax
+﻿using System;
+
+namespace Plissken.CodeAnalysis.Syntax
 {
-    internal static class SyntaxPrecedence
+    internal static class SyntaxRules
     {
         /// <summary>
         /// Get the precedence for the unary operator
@@ -41,6 +43,19 @@
                     return 1;
                 default:
                     return 0;
+            }
+        }
+
+        internal static SyntaxKind GetKeywordKind(string text)
+        {
+            switch(text)
+            {
+                case "true":
+                    return SyntaxKind.TrueKeyword;
+                case "false":
+                    return SyntaxKind.FalseKeyword;
+                default:
+                    return SyntaxKind.IdentifierToken;
             }
         }
     }
