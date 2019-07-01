@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeAnalysis\Binding\Binder.cs" />
     <Compile Include="CodeAnalysis\Syntax\BinaryExpressionSyntax.cs" />
     <Compile Include="CodeAnalysis\Evaluator.cs" />
     <Compile Include="CodeAnalysis\Syntax\ExpressionSyntax.cs" />

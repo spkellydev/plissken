@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plissken.CodeAnalysis;
+using Plissken.CodeAnalysis.Binding;
 using Plissken.CodeAnalysis.Syntax;
 
 namespace Plissken
@@ -37,6 +38,9 @@ namespace Plissken
                 }
 
                 var syntaxTree = SyntaxTree.Parse(line);
+                var binder = new Binder();
+                var boundExpression = binder.BindExpression(syntaxTree.Root);
+                var diagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
 
                 if (showTree) PrettyPrint(syntaxTree.Root);
                 else if (line == "#cls")
@@ -45,9 +49,9 @@ namespace Plissken
                     continue;
                 }
 
-                if (!syntaxTree.Diagnostics.Any())
+                if (!diagnostics.Any())
                 {
-                    var evalutor = new Evaluator(syntaxTree.Root);
+                    var evalutor = new Evaluator(boundExpression);
                     var result = evalutor.Evaluate();
                     Console.WriteLine(result);
                 }

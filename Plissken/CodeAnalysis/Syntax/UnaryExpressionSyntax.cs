@@ -17,7 +17,7 @@ namespace Plissken.CodeAnalysis.Syntax
         public SyntaxToken OperatorToken { get; }
         public ExpressionSyntax Operand { get; }
 
-        public override SyntaxKind Kind => SyntaxKind.UnarySyntax;
+        public override SyntaxKind Kind => SyntaxKind.UnaryExpression;
 
         public override IEnumerable<SyntaxNode> GetChildren()
         {
