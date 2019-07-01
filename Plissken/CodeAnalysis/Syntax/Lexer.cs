@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Plissken.CodeAnalysis.Syntax
+namespace PlisskenCompiler.CodeAnalysis.Syntax
 {
     internal sealed class Lexer
     {
@@ -103,7 +103,7 @@ namespace Plissken.CodeAnalysis.Syntax
                         return new SyntaxToken(SyntaxKind.EqualEqualToken, _position += 2, "==", null);
                     break;
                 case '!':
-                    if (Lookahead == '!')
+                    if (Lookahead == '=')
                         return new SyntaxToken(SyntaxKind.BangEqualToken, _position += 2, "!=", null);
                     else
                         return new SyntaxToken(SyntaxKind.BangToken, _position++, "!", null);

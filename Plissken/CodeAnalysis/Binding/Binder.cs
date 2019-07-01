@@ -1,11 +1,11 @@
-﻿using Plissken.CodeAnalysis.Syntax;
+﻿using PlisskenCompiler.CodeAnalysis.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plissken.CodeAnalysis.Binding
+namespace PlisskenCompiler.CodeAnalysis.Binding
 {
     internal sealed class Binder
     {

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plissken", "Plissken\Plissken.csproj", "{D75CE556-EDB3-40ED-B836-168DAA5F12A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlisskenCompiler", "Plissken\PlisskenCompiler.csproj", "{D75CE556-EDB3-40ED-B836-168DAA5F12A7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4BE30E19-75EA-4493-8046-11FB5ABCE043}"
 	ProjectSection(SolutionItems) = preProject

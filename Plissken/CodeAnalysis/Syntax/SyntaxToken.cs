@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Plissken.CodeAnalysis.Syntax
+namespace PlisskenCompiler.CodeAnalysis.Syntax
 {
     public sealed class SyntaxToken : SyntaxNode
     {

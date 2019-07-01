@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Plissken.CodeAnalysis.Syntax
+namespace PlisskenCompiler.CodeAnalysis.Syntax
 {
     internal sealed class Parser
     {

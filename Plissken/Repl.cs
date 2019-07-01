@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Plissken.CodeAnalysis;
-using Plissken.CodeAnalysis.Binding;
-using Plissken.CodeAnalysis.Syntax;
+using PlisskenCompiler.CodeAnalysis;
+using PlisskenCompiler.CodeAnalysis.Binding;
+using PlisskenCompiler.CodeAnalysis.Syntax;
 
-namespace Plissken
+namespace PlisskenCompiler
 {
     // 1 + 2 * 3
     //

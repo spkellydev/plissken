@@ -1,7 +1,7 @@
-﻿using Plissken.CodeAnalysis.Syntax;
+﻿using PlisskenCompiler.CodeAnalysis.Syntax;
 using System;
 
-namespace Plissken.CodeAnalysis.Binding
+namespace PlisskenCompiler.CodeAnalysis.Binding
 {
     internal sealed class BoundBinaryOperator
     {

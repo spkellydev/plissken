@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Plissken.CodeAnalysis.Binding
+namespace PlisskenCompiler.CodeAnalysis.Binding
 {
     internal abstract class BoundExpression : BoundNode
     {

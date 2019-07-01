@@ -1,4 +1,4 @@
-﻿namespace Plissken.CodeAnalysis.Binding
+﻿namespace PlisskenCompiler.CodeAnalysis.Binding
 {
     internal enum BoundUnaryOperatorKind
     {

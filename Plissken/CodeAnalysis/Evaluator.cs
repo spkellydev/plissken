@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
-using Plissken.CodeAnalysis.Binding;
-using Plissken.CodeAnalysis.Syntax;
+using PlisskenCompiler.CodeAnalysis.Binding;
+using PlisskenCompiler.CodeAnalysis.Syntax;
 
-namespace Plissken.CodeAnalysis
+namespace PlisskenCompiler.CodeAnalysis
 {
     internal sealed class Evaluator
     {

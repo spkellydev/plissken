@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Plissken.CodeAnalysis.Binding
+namespace PlisskenCompiler.CodeAnalysis.Binding
 {
     internal sealed class BoundLiteralExpression : BoundExpression
     {

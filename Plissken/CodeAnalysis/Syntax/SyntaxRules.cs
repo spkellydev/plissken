@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Plissken.CodeAnalysis.Syntax
+namespace PlisskenCompiler.CodeAnalysis.Syntax
 {
     internal static class SyntaxRules
     {
