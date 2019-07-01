@@ -11,7 +11,8 @@ Plissken is an attempt at creating a functional language to be used interoperati
 - [x] Urnary operators
 - [x] Bound expressions to .NET type system
 - [x] Boolean expressions
-- [ ] ! <not> operator
-- [ ] && <and> operator
-- [ ] || <or> operator
+- [x] ! <not> operator
+- [x] && <and> operator
+- [x] || <or> operator
+- [ ] == <equal> operator
 - [ ] Everything else

@@ -28,10 +28,10 @@ namespace Plissken.CodeAnalysis
                 case BoundLiteralExpression n:
                     return n.Value;
                 // UnaryExpression
-                case BoundUrnaryExpression u:
+                case BoundUnaryExpression u:
                     {
                         var operand = EvaluateExpression(u.Operand);
-                        switch (u.OperatorKind)
+                        switch (u.Op.Kind)
                         {
                             case BoundUnaryOperatorKind.Identity:
                                 return (int)operand;
@@ -40,7 +40,7 @@ namespace Plissken.CodeAnalysis
                             case BoundUnaryOperatorKind.LogicalNegation:
                                 return !(bool)operand;
                             default:
-                                throw new Exception($"ERROR: Unexpected unary operator {u.OperatorKind}");
+                                throw new Exception($"ERROR: Unexpected unary operator {u.Op.Kind}");
                         }
                     }
 
@@ -50,7 +50,7 @@ namespace Plissken.CodeAnalysis
                         var left = EvaluateExpression(b.Left);
                         var right = EvaluateExpression(b.Right);
 
-                        switch (b.OperatorKind)
+                        switch (b.Op.Kind)
                         {
                             case BoundBinaryOperatorKind.Addition:
                                 return (int)left + (int)right;
@@ -65,7 +65,7 @@ namespace Plissken.CodeAnalysis
                             case BoundBinaryOperatorKind.LogicalOr:
                                 return (bool)left || (bool)right;
                             default:
-                                throw new Exception($"ERROR: Unexpected binary operator {b.OperatorKind}");
+                                throw new Exception($"ERROR: Unexpected binary operator {b.Op.Kind}");
                         }
                     }
                 default:

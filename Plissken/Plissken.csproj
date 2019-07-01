@@ -45,13 +45,15 @@
   <ItemGroup>
     <Compile Include="CodeAnalysis\Binding\Binder.cs" />
     <Compile Include="CodeAnalysis\Binding\BoundBinaryExpression.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundBinaryOperator.cs" />
     <Compile Include="CodeAnalysis\Binding\BoundBinaryOperatorKind.cs" />
     <Compile Include="CodeAnalysis\Binding\BoundExpression.cs" />
     <Compile Include="CodeAnalysis\Binding\BoundLiteralExpression.cs" />
     <Compile Include="CodeAnalysis\Binding\BoundNode.cs" />
     <Compile Include="CodeAnalysis\Binding\BoundNodeKind.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundUnaryOperator.cs" />
     <Compile Include="CodeAnalysis\Binding\BoundUnaryOperatorKind.cs" />
-    <Compile Include="CodeAnalysis\Binding\BoundUrnaryExpression.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundUnaryExpression.cs" />
     <Compile Include="CodeAnalysis\Syntax\BinaryExpressionSyntax.cs" />
     <Compile Include="CodeAnalysis\Evaluator.cs" />
     <Compile Include="CodeAnalysis\Syntax\ExpressionSyntax.cs" />
