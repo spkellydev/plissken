@@ -7,6 +7,8 @@
         Multiplication,
         Division,
         Addition,
-        Subtraction
+        Subtraction,
+        Equals,
+        NotEquals
     }
 }

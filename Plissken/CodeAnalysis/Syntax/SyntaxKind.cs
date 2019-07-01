@@ -17,6 +17,8 @@
         BangToken, // !
         AmpersandAmpersandToken, // &&
         PipePipeToken, // ||
+        EqualEqualToken, // ==
+        BangEqualToken, // !=
         // keywords
         FalseKeyword, // false
         TrueKeyword, // true

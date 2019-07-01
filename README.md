@@ -15,4 +15,5 @@ Plissken is an attempt at creating a functional language to be used interoperati
 - [x] && <and> operator
 - [x] || <or> operator
 - [ ] == <equal> operator
+- [ ] != <not-equal> operator
 - [ ] Everything else
