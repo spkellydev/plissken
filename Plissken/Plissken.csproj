@@ -43,17 +43,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeAnalysis\BinaryExpressionSyntax.cs" />
+    <Compile Include="CodeAnalysis\Binding\Binder.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundBinaryExpression.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundBinaryOperator.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundBinaryOperatorKind.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundExpression.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundLiteralExpression.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundNode.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundNodeKind.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundUnaryOperator.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundUnaryOperatorKind.cs" />
+    <Compile Include="CodeAnalysis\Binding\BoundUnaryExpression.cs" />
+    <Compile Include="CodeAnalysis\Syntax\BinaryExpressionSyntax.cs" />
     <Compile Include="CodeAnalysis\Evaluator.cs" />
-    <Compile Include="CodeAnalysis\ExpressionSyntax.cs" />
-    <Compile Include="CodeAnalysis\Lexer.cs" />
-    <Compile Include="CodeAnalysis\NumberExpressionSyntax.cs" />
-    <Compile Include="CodeAnalysis\ParenExpressionSyntax.cs" />
-    <Compile Include="CodeAnalysis\Parser.cs" />
-    <Compile Include="CodeAnalysis\SyntaxKind.cs" />
-    <Compile Include="CodeAnalysis\SyntaxNode.cs" />
-    <Compile Include="CodeAnalysis\SyntaxToken.cs" />
-    <Compile Include="CodeAnalysis\SyntaxTree.cs" />
+    <Compile Include="CodeAnalysis\Syntax\ExpressionSyntax.cs" />
+    <Compile Include="CodeAnalysis\Syntax\Lexer.cs" />
+    <Compile Include="CodeAnalysis\Syntax\LiteralExpressionSyntax.cs" />
+    <Compile Include="CodeAnalysis\Syntax\ParenExpressionSyntax.cs" />
+    <Compile Include="CodeAnalysis\Syntax\Parser.cs" />
+    <Compile Include="CodeAnalysis\Syntax\SyntaxKind.cs" />
+    <Compile Include="CodeAnalysis\Syntax\SyntaxNode.cs" />
+    <Compile Include="CodeAnalysis\Syntax\SyntaxRules.cs" />
+    <Compile Include="CodeAnalysis\Syntax\SyntaxToken.cs" />
+    <Compile Include="CodeAnalysis\Syntax\SyntaxTree.cs" />
+    <Compile Include="CodeAnalysis\Syntax\UnaryExpressionSyntax.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repl.cs" />
   </ItemGroup>

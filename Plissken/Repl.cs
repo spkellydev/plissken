@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plissken.CodeAnalysis;
+using Plissken.CodeAnalysis.Binding;
+using Plissken.CodeAnalysis.Syntax;
 
 namespace Plissken
 {
@@ -14,11 +16,11 @@ namespace Plissken
     // 1   *
     //    / \
     //   2   3
-    class Repl
+    internal static class Repl
     {
         static void Main(string[] args)
         {
-            bool showTree = false;
+            var showTree = false;
             while (true)
             {
                 Console.Write("> ");
@@ -36,6 +38,9 @@ namespace Plissken
                 }
 
                 var syntaxTree = SyntaxTree.Parse(line);
+                var binder = new Binder();
+                var boundExpression = binder.BindExpression(syntaxTree.Root);
+                var diagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
 
                 if (showTree) PrettyPrint(syntaxTree.Root);
                 else if (line == "#cls")
@@ -44,16 +49,16 @@ namespace Plissken
                     continue;
                 }
 
-                if (!syntaxTree.Diagnostics.Any())
+                if (!diagnostics.Any())
                 {
-                    var evalutor = new Evaluator(syntaxTree.Root);
+                    var evalutor = new Evaluator(boundExpression);
                     var result = evalutor.Evaluate();
                     Console.WriteLine(result);
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    foreach (var diagnostic in syntaxTree.Diagnostics)
+                    foreach (var diagnostic in diagnostics)
                         Console.WriteLine(diagnostic);
                     Console.ResetColor();
                 }
@@ -86,7 +91,7 @@ namespace Plissken
             Console.WriteLine();
 
             var lastChild = node.GetChildren().LastOrDefault();
-            indent += isLast ? "    " : "│   ";
+            indent += isLast ? "   " : "│  ";
 
             foreach (var child in node.GetChildren())
                 PrettyPrint(child, indent, child == lastChild);

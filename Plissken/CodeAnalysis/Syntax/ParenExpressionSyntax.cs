@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Plissken.CodeAnalysis
+namespace Plissken.CodeAnalysis.Syntax
 {
-    sealed class ParenExpressionSyntax : ExpressionSyntax
+    public sealed class ParenExpressionSyntax : ExpressionSyntax
     {
         public ParenExpressionSyntax(SyntaxToken openParenToken, ExpressionSyntax expression, SyntaxToken closeParenToken)
         {

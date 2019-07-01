@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Plissken.CodeAnalysis
+namespace Plissken.CodeAnalysis.Syntax
 {
-    class Lexer
+    internal sealed class Lexer
     {
         private readonly string _text;
         private int _position;
@@ -14,14 +14,15 @@ namespace Plissken.CodeAnalysis
         }
 
         public IEnumerable<string> Diagnostics => _diagnostics;
-        private char Current
+        private char Current => Peek(0);
+        private char Lookahead => Peek(1);
+
+        private char Peek(int offset)
         {
-            get
-            {
-                if (_position >= _text.Length)
-                    return '\0';
-                return _text[_position];
-            }
+            var index = _position + offset;
+            if (index >= _text.Length)
+                return '\0';
+            return _text[index];
         }
 
         private void Next()
@@ -29,7 +30,7 @@ namespace Plissken.CodeAnalysis
             _position++;
         }
 
-        public SyntaxToken NextToken()
+        public SyntaxToken Lex()
         {
             // <EOF>
             if (_position >= _text.Length)
@@ -61,6 +62,19 @@ namespace Plissken.CodeAnalysis
                 var text = _text.Substring(start, length);
                 return new SyntaxToken(SyntaxKind.WhitespaceToken, start, text, null);
             }
+            // <boolean>
+            if (char.IsLetter(Current))
+            {
+                var start = _position;
+                while (char.IsLetter(Current))
+                    Next();
+
+                var length = _position - start;
+                var text = _text.Substring(start, length);
+                var kind = SyntaxRules.GetKeywordKind(text);
+                return new SyntaxToken(kind, start, text, null);
+            }
+
             // <operator> + - / ( )
             switch (Current)
             {
@@ -76,10 +90,26 @@ namespace Plissken.CodeAnalysis
                     return new SyntaxToken(SyntaxKind.OpenParenToken, _position++, "(", null);
                 case ')':
                     return new SyntaxToken(SyntaxKind.CloseParenToken, _position++, ")", null);
-                default:
-                    _diagnostics.Add($"ERROR: bad character input: '{Current}'");
-                    return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.Substring(_position - 1, 1), null);
+                case '&':
+                    if (Lookahead == '&')
+                        return new SyntaxToken(SyntaxKind.AmpersandAmpersandToken, _position += 2, "&&", null);
+                    break;
+                case '|':
+                    if (Lookahead == '|')
+                        return new SyntaxToken(SyntaxKind.PipePipeToken, _position += 2, "||", null);
+                    break;
+                case '=':
+                    if (Lookahead == '=')
+                        return new SyntaxToken(SyntaxKind.EqualEqualToken, _position += 2, "==", null);
+                    break;
+                case '!':
+                    if (Lookahead == '!')
+                        return new SyntaxToken(SyntaxKind.BangEqualToken, _position += 2, "!=", null);
+                    else
+                        return new SyntaxToken(SyntaxKind.BangToken, _position++, "!", null);
             }
+            _diagnostics.Add($"ERROR: bad character input: '{Current}'");
+            return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.Substring(_position - 1, 1), null);
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Plissken.CodeAnalysis
+namespace Plissken.CodeAnalysis.Syntax
 {
-    class Parser
+    internal sealed class Parser
     {
         private readonly SyntaxToken[] _tokens;
         private int _position;
@@ -15,7 +15,7 @@ namespace Plissken.CodeAnalysis
             SyntaxToken token;
             do
             {
-                token = lexer.NextToken();
+                token = lexer.Lex();
                 if (token.Kind != SyntaxKind.WhitespaceToken &&
                     token.Kind != SyntaxKind.BadToken)
                 {
@@ -45,7 +45,7 @@ namespace Plissken.CodeAnalysis
             return current;
         }
 
-        private SyntaxToken Match(SyntaxKind kind)
+        private SyntaxToken MatchToken(SyntaxKind kind)
         {
             if (Current.Kind == kind)
                 return NextToken();
@@ -54,39 +54,35 @@ namespace Plissken.CodeAnalysis
             return new SyntaxToken(kind, Current.Position, null, null);
         }
 
-        private ExpressionSyntax ParseExpression()
-        {
-            return ParseTerm();
-        }
-
         public SyntaxTree Parse()
         {
-            var expression = ParseTerm();
-            var eofToken = Match(SyntaxKind.EOFToken);
+            var expression = ParseExpression();
+            var eofToken = MatchToken(SyntaxKind.EOFToken);
             return new SyntaxTree(_diagnostics, expression, eofToken);
         }
 
-        private ExpressionSyntax ParseTerm()
+        private ExpressionSyntax ParseExpression(int parentPrecedence = 0)
         {
-            var left = ParseFactor();
-            while (Current.Kind == SyntaxKind.PlusToken ||
-                  Current.Kind == SyntaxKind.MinusToken)
+            ExpressionSyntax left;
+            var unaryOperatorPrecedence = Current.Kind.GetUnaryOperatorPrecedence();
+            if (unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence)
             {
                 var operatorToken = NextToken();
-                var right = ParseFactor();
-                left = new BinaryExpressionSyntax(left, operatorToken, right);
+                var operand = ParseExpression();
+                left = new UnaryExpressionSyntax(operatorToken, operand);
             }
-            return left;
-        }
-
-        private ExpressionSyntax ParseFactor()
-        {
-            var left = ParsePrimaryExpression();
-            while (Current.Kind == SyntaxKind.StarToken ||
-                  Current.Kind == SyntaxKind.ForwardSlashToken)
+            else
             {
+                left = ParsePrimaryExpression();
+            }
+
+            while(true)
+            {
+                var precedence = Current.Kind.GetBinaryOperatorPrecedence();
+                if (precedence == 0 || precedence <= parentPrecedence)
+                    break;
                 var operatorToken = NextToken();
-                var right = ParsePrimaryExpression();
+                var right = ParseExpression(precedence);
                 left = new BinaryExpressionSyntax(left, operatorToken, right);
             }
             return left;
@@ -94,15 +90,26 @@ namespace Plissken.CodeAnalysis
 
         private ExpressionSyntax ParsePrimaryExpression()
         {
-            if (Current.Kind == SyntaxKind.OpenParenToken)
+            switch (Current.Kind)
             {
-                var left = NextToken();
-                var expression = ParseExpression();
-                var right = Match(SyntaxKind.CloseParenToken);
-                return new ParenExpressionSyntax(left, expression, right);
+                case SyntaxKind.OpenParenToken:
+                {
+                    var left = NextToken();
+                    var expression = ParseExpression();
+                    var right = MatchToken(SyntaxKind.CloseParenToken);
+                    return new ParenExpressionSyntax(left, expression, right);
+                }
+
+                case SyntaxKind.TrueKeyword:
+                case SyntaxKind.FalseKeyword:
+                {
+                    var keywordToken = NextToken();
+                    var value = keywordToken.Kind == SyntaxKind.TrueKeyword;
+                    return new LiteralExpressionSyntax(keywordToken, value);
+                }
             }
-            var numberToken = Match(SyntaxKind.NumberToken);
-            return new NumberExpressionSyntax(numberToken);
+            var numberToken = MatchToken(SyntaxKind.NumberToken);
+            return new LiteralExpressionSyntax(numberToken);
         }
     }
 }
