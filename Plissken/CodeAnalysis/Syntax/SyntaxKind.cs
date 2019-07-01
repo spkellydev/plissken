@@ -7,16 +7,19 @@
         EOFToken,
         WhitespaceToken,
         NumberToken,
-        PlusToken,
-        MinusToken,
-        StarToken,
-        ForwardSlashToken,
-        OpenParenToken,
-        CloseParenToken,
+        PlusToken, // +
+        MinusToken, // -
+        StarToken, // *
+        ForwardSlashToken, // /
+        OpenParenToken, // (
+        CloseParenToken, // )
         IdentifierToken,
+        BangToken, // !
+        AmpersandAmpersandToken, // &&
+        PipePipeToken, // ||
         // keywords
-        FalseKeyword,
-        TrueKeyword,
+        FalseKeyword, // false
+        TrueKeyword, // true
         // expressions
         LiteralExpression,
         BinaryExpression,
