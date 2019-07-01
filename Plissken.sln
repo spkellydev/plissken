@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlisskenLibrary", "PlisskenLibrary\PlisskenLibrary.csproj", "{EBCA8A6A-ABAE-4A43-B43E-672CB9FEAFAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{D75CE556-EDB3-40ED-B836-168DAA5F12A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D75CE556-EDB3-40ED-B836-168DAA5F12A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D75CE556-EDB3-40ED-B836-168DAA5F12A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBCA8A6A-ABAE-4A43-B43E-672CB9FEAFAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBCA8A6A-ABAE-4A43-B43E-672CB9FEAFAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBCA8A6A-ABAE-4A43-B43E-672CB9FEAFAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBCA8A6A-ABAE-4A43-B43E-672CB9FEAFAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

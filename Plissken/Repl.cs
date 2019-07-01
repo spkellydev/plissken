@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PlisskenCompiler.CodeAnalysis;
-using PlisskenCompiler.CodeAnalysis.Binding;
-using PlisskenCompiler.CodeAnalysis.Syntax;
+using PlisskenLibrary.CodeAnalysis;
+using PlisskenLibrary.CodeAnalysis.Binding;
+using PlisskenLibrary.CodeAnalysis.Syntax;
 
-namespace PlisskenCompiler
+namespace PlisskenLibrary
 {
     // 1 + 2 * 3
     //
@@ -38,9 +38,9 @@ namespace PlisskenCompiler
                 }
 
                 var syntaxTree = SyntaxTree.Parse(line);
-                var binder = new Binder();
-                var boundExpression = binder.BindExpression(syntaxTree.Root);
-                var diagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
+                var compiler = new Compilation(syntaxTree);
+                var result = compiler.Evaluate();
+                var diagnostics = result.Diagnostics;
 
                 if (showTree) PrettyPrint(syntaxTree.Root);
                 else if (line == "#cls")
@@ -51,9 +51,7 @@ namespace PlisskenCompiler
 
                 if (!diagnostics.Any())
                 {
-                    var evalutor = new Evaluator(boundExpression);
-                    var result = evalutor.Evaluate();
-                    Console.WriteLine(result);
+                    Console.WriteLine(result.Value);
                 }
                 else
                 {
