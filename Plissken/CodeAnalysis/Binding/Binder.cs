@@ -22,6 +22,8 @@ namespace Plissken.CodeAnalysis.Binding
                     return BindBinaryExpression((BinaryExpressionSyntax)syntax);
                 case SyntaxKind.UnaryExpression:
                     return BindUnaryExpression((UnaryExpressionSyntax)syntax);
+                case SyntaxKind.ParenExpression:
+                    return BindExpression(((ParenExpressionSyntax)syntax).Expression);
                 default:
                     throw new Exception($"ERROR: Unexpected syntax '{syntax.Kind}'");
             }
