@@ -17,6 +17,7 @@
         BangToken, // !
         AmpersandAmpersandToken, // &&
         PipePipeToken, // ||
+        EqualToken, // =
         EqualEqualToken, // ==
         BangEqualToken, // !=
         // keywords
@@ -27,5 +28,7 @@
         BinaryExpression,
         ParenExpression,
         UnaryExpression,
+        NameExpression,
+        AssignmentExpression,
     }
 }

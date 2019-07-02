@@ -108,7 +108,11 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
                         _position += 2;
                         return new SyntaxToken(SyntaxKind.EqualEqualToken, start, "==", null);
                     }
-                    break;
+                    else
+                    {
+                        _position++;
+                        return new SyntaxToken(SyntaxKind.EqualToken, start, "=", null);
+                    }
                 case '!':
                     if (Lookahead == '=')
                     {

@@ -16,23 +16,56 @@ namespace PlisskenLibrary.CodeAnalysis.Binding
         {
             switch (syntax.Kind)
             {
+                case SyntaxKind.ParenExpression:
+                    return BindParenExpression((ParenExpressionSyntax)syntax);
                 case SyntaxKind.LiteralExpression:
                     return BindLiteralExpression((LiteralExpressionSyntax)syntax);
-                case SyntaxKind.BinaryExpression:
-                    return BindBinaryExpression((BinaryExpressionSyntax)syntax);
+                case SyntaxKind.NameExpression:
+                    return BindNameExpression((NameExpressionSyntax)syntax);
+                case SyntaxKind.AssignmentExpression:
+                    return BindAssignmentExpression((AssignmentExpressionSyntax)syntax);
                 case SyntaxKind.UnaryExpression:
                     return BindUnaryExpression((UnaryExpressionSyntax)syntax);
-                case SyntaxKind.ParenExpression:
-                    return BindExpression(((ParenExpressionSyntax)syntax).Expression);
+                case SyntaxKind.BinaryExpression:
+                    return BindBinaryExpression((BinaryExpressionSyntax)syntax);
                 default:
                     throw new Exception($"ERROR: Unexpected syntax '{syntax.Kind}'");
             }
+        }
+
+        private BoundExpression BindParenExpression(ParenExpressionSyntax syntax)
+        {
+            return BindExpression(syntax.Expression);
         }
 
         private BoundExpression BindLiteralExpression(LiteralExpressionSyntax syntax)
         {
             var value = syntax.Value ?? 0;
             return new BoundLiteralExpression(value);
+        }
+
+        private BoundExpression BindNameExpression(NameExpressionSyntax syntax)
+        {
+            throw new NotImplementedException();
+        }
+
+        private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax)
+        {
+            throw new NotImplementedException();
+        }
+
+        private BoundExpression BindUnaryExpression(UnaryExpressionSyntax syntax)
+        {
+            var boundOperand = BindExpression(syntax.Operand);
+            var boundOperator = BoundUnaryOperator.Bind(syntax.OperatorToken.Kind, boundOperand.Type);
+
+            if (boundOperator == null)
+            {
+                _diagnostics.ReportUndefinedUnaryOperator(syntax.OperatorToken.Span, syntax.OperatorToken.Text, boundOperator.Type);
+                return boundOperand;
+            }
+
+            return new BoundUnaryExpression(boundOperator, boundOperand);
         }
 
         private BoundExpression BindBinaryExpression(BinaryExpressionSyntax syntax)
@@ -48,20 +81,6 @@ namespace PlisskenLibrary.CodeAnalysis.Binding
             }
 
             return new BoundBinaryExpression(boundLeft, boundOperator, boundRight);
-        }
-
-        private BoundExpression BindUnaryExpression(UnaryExpressionSyntax syntax)
-        {
-            var boundOperand = BindExpression(syntax.Operand);
-            var boundOperator = BoundUnaryOperator.Bind(syntax.OperatorToken.Kind, boundOperand.Type);
-
-            if (boundOperator == null)
-            {
-                _diagnostics.ReportUndefinedUnaryOperator(syntax.OperatorToken.Span, syntax.OperatorToken.Text, boundOperator.Type);
-                return boundOperand;
-            }
-
-            return new BoundUnaryExpression(boundOperator, boundOperand);
         }
     }
 }
