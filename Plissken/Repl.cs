@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Plissken.CodeAnalysis;
-using Plissken.CodeAnalysis.Binding;
-using Plissken.CodeAnalysis.Syntax;
+using PlisskenLibrary.CodeAnalysis;
+using PlisskenLibrary.CodeAnalysis.Binding;
+using PlisskenLibrary.CodeAnalysis.Syntax;
 
-namespace Plissken
+namespace PlisskenLibrary
 {
     // 1 + 2 * 3
     //
@@ -21,6 +21,7 @@ namespace Plissken
         static void Main(string[] args)
         {
             var showTree = false;
+            var variables = new Dictionary<VariableSymbol, object>();
             while (true)
             {
                 Console.Write("> ");
@@ -38,9 +39,9 @@ namespace Plissken
                 }
 
                 var syntaxTree = SyntaxTree.Parse(line);
-                var binder = new Binder();
-                var boundExpression = binder.BindExpression(syntaxTree.Root);
-                var diagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
+                var compiler = new Compilation(syntaxTree);
+                var result = compiler.Evaluate(variables);
+                var diagnostics = result.Diagnostics;
 
                 if (showTree) PrettyPrint(syntaxTree.Root);
                 else if (line == "#cls")
@@ -51,16 +52,29 @@ namespace Plissken
 
                 if (!diagnostics.Any())
                 {
-                    var evalutor = new Evaluator(boundExpression);
-                    var result = evalutor.Evaluate();
-                    Console.WriteLine(result);
+                    Console.WriteLine(result.Value);
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     foreach (var diagnostic in diagnostics)
+                    {
+                        Console.WriteLine();
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine(diagnostic);
-                    Console.ResetColor();
+                        Console.ResetColor();
+
+                        var prefix = line.Substring(0, diagnostic.Span.Start);
+                        var error = line.Substring(diagnostic.Span.Start, diagnostic.Span.Length);
+                        var suffix = line.Substring(diagnostic.Span.End);
+
+                        Console.Write("    ");
+                        Console.Write(prefix);
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write(error);
+                        Console.ResetColor();
+                        Console.WriteLine(suffix);
+                    }
+                    Console.WriteLine();
                 }
             }
         }
