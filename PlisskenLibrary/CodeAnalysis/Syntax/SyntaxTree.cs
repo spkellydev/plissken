@@ -21,5 +21,21 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
             var parser = new Parser(text);
             return parser.Parse();
         }
+
+        /// <summary>
+        /// ParseTokens will return tokenized text except the EOF token
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static IEnumerable<SyntaxToken> ParseTokens(string text)
+        {
+            var lexer = new Lexer(text);
+            while (true)
+            {
+                var token = lexer.Lex();
+                if (token.Kind == SyntaxKind.EOFToken) break;
+                yield return token;
+            }
+        }
     }
 }
