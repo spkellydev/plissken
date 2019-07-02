@@ -9,7 +9,14 @@ namespace PlisskenLibrary.CodeAnalysis.Binding
 {
     internal sealed class Binder
     {
+        private readonly Dictionary<string, object> _variables;
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
+
+        public Binder(Dictionary<string, object> variables)
+        {
+            _variables = variables;
+        }
+
         public DiagnosticBag Diagnostics => _diagnostics;
 
         public BoundExpression BindExpression(ExpressionSyntax syntax)
@@ -46,12 +53,28 @@ namespace PlisskenLibrary.CodeAnalysis.Binding
 
         private BoundExpression BindNameExpression(NameExpressionSyntax syntax)
         {
-            throw new NotImplementedException();
+            var name = syntax.IdentifierToken.Text;
+            if (!_variables.TryGetValue(name, out var value))
+            {
+                _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Span, name);
+                return new BoundLiteralExpression(0);
+            }
+            var type = value.GetType();
+            return new BoundVariableExpression(name, type);
         }
 
         private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax)
         {
-            throw new NotImplementedException();
+            var name = syntax.IdentifierToken.Text;
+            var boundExpression = BindExpression(syntax.Expression);
+            var defaultValue = boundExpression.Type == typeof(int)
+                ? (object)0
+                    : boundExpression.Type == typeof(bool)
+                    ? (object)false
+                        : null;
+            if (defaultValue == null) throw new Exception("Unsupported variable type");
+            _variables[name] = defaultValue;
+            return new BoundAssignmentExpression(name, boundExpression);
         }
 
         private BoundExpression BindUnaryExpression(UnaryExpressionSyntax syntax)

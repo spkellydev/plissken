@@ -78,7 +78,7 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
             //
 
             if (Peek(0).Kind == SyntaxKind.IdentifierToken &&
-                Peek(1).Kind == SyntaxKind.EqualEqualToken)
+                Peek(1).Kind == SyntaxKind.EqualToken)
             {
                 var identifierToken = NextToken();
                 var operatorToken = NextToken();

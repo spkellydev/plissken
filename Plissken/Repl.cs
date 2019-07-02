@@ -21,6 +21,7 @@ namespace PlisskenLibrary
         static void Main(string[] args)
         {
             var showTree = false;
+            var variables = new Dictionary<string, object>();
             while (true)
             {
                 Console.Write("> ");
@@ -39,7 +40,7 @@ namespace PlisskenLibrary
 
                 var syntaxTree = SyntaxTree.Parse(line);
                 var compiler = new Compilation(syntaxTree);
-                var result = compiler.Evaluate();
+                var result = compiler.Evaluate(variables);
                 var diagnostics = result.Diagnostics;
 
                 if (showTree) PrettyPrint(syntaxTree.Root);
