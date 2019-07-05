@@ -91,6 +91,17 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
 
         private ExpressionSyntax ParseBinaryExpression(int parentPrecedence = 0)
         {
+            // a = 10           a = 2
+            // b = 5            b = 4
+            // a + b            c = 5
+            //                  a + (b * c)
+            //
+            //   +                 +
+            //  / \               / \
+            // a   b             a   *
+            //                      / \
+            //                     b   c
+            //
             ExpressionSyntax left;
             var unaryOperatorPrecedence = Current.Kind.GetUnaryOperatorPrecedence();
             if (unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence)
