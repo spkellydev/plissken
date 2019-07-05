@@ -32,11 +32,11 @@ namespace PlisskenLibrary.Tests.CodeAnalysis.Syntax
                             e.AssertNode(SyntaxKind.NameExpression);
                                 e.AssertToken(SyntaxKind.IdentifierToken, "a");
                             e.AssertToken(op1, op1Text);
-                                e.AssertNode(SyntaxKind.NameExpression);
+                            e.AssertNode(SyntaxKind.NameExpression);
                                     e.AssertToken(SyntaxKind.IdentifierToken, "b");
-                                e.AssertToken(op2, op2Text);
-                                    e.AssertNode(SyntaxKind.NameExpression);
-                                        e.AssertToken(SyntaxKind.IdentifierToken, "c");
+                        e.AssertToken(op2, op2Text);
+                            e.AssertNode(SyntaxKind.NameExpression);
+                                e.AssertToken(SyntaxKind.IdentifierToken, "c");
 
                 }
             }
@@ -53,12 +53,64 @@ namespace PlisskenLibrary.Tests.CodeAnalysis.Syntax
                         e.AssertNode(SyntaxKind.NameExpression);
                             e.AssertToken(SyntaxKind.IdentifierToken, "a");
                         e.AssertToken(op1, op1Text);
-                            e.AssertNode(SyntaxKind.BinaryExpression);
+                        e.AssertNode(SyntaxKind.BinaryExpression);
+                            e.AssertNode(SyntaxKind.NameExpression);
+                                e.AssertToken(SyntaxKind.IdentifierToken, "b");
+                            e.AssertToken(op2, op2Text);
                                 e.AssertNode(SyntaxKind.NameExpression);
-                                    e.AssertToken(SyntaxKind.IdentifierToken, "b");
-                                e.AssertToken(op2, op2Text);
-                                    e.AssertNode(SyntaxKind.NameExpression);
-                                        e.AssertToken(SyntaxKind.IdentifierToken, "c");
+                                    e.AssertToken(SyntaxKind.IdentifierToken, "c");
+                }
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(GetUnaryOperatorsPairsData))]
+        public void Parser_UnaryExpression_HonorsPrecedence(SyntaxKind unaryKind, SyntaxKind binaryKind)
+        {
+            var unaryPrecedence = SyntaxRules.GetUnaryOperatorPrecedence(unaryKind);
+            var binaryPrecedence = SyntaxRules.GetBinaryOperatorPrecedence(binaryKind);
+            var unaryText = SyntaxRules.GetText(unaryKind);
+            var binaryText = SyntaxRules.GetText(binaryKind);
+            var text = $"{unaryText} a {binaryText} b";
+
+            var expression = SyntaxTree.Parse(text).Root;
+
+            if (unaryPrecedence <= binaryPrecedence)
+            {
+                //    binary
+                //    /   \
+                //  unary   b
+                //    |
+                //    a
+                using (var e = new AssertingEnumerator(expression))
+                {
+                    e.AssertNode(SyntaxKind.BinaryExpression);
+                        e.AssertNode(SyntaxKind.UnaryExpression);
+                            e.AssertToken(unaryKind, unaryText);
+                            e.AssertNode(SyntaxKind.NameExpression);
+                            e.AssertToken(SyntaxKind.IdentifierToken, "a");
+                        e.AssertToken(binaryKind, binaryText);
+                        e.AssertNode(SyntaxKind.NameExpression);
+                            e.AssertToken(SyntaxKind.IdentifierToken, "b");
+                }
+            }
+            else
+            {
+                //    unary
+                //      |
+                //    binary
+                //    /   \
+                //   a     b
+                using (var e = new AssertingEnumerator(expression))
+                {
+                    e.AssertNode(SyntaxKind.UnaryExpression);
+                        e.AssertToken(unaryKind, unaryText);
+                        e.AssertNode(SyntaxKind.BinaryExpression);
+                            e.AssertNode(SyntaxKind.NameExpression);
+                                e.AssertToken(SyntaxKind.IdentifierToken, "a");
+                            e.AssertToken(binaryKind, binaryText);
+                            e.AssertNode(SyntaxKind.NameExpression);
+                                e.AssertToken(SyntaxKind.IdentifierToken, "b");
                 }
             }
         }
@@ -70,6 +122,17 @@ namespace PlisskenLibrary.Tests.CodeAnalysis.Syntax
                 foreach(var op2 in SyntaxRules.GetBinaryOperatorKinds())
                 {
                     yield return new object[] { op1, op2 };
+                }
+            }
+        }
+
+        public static IEnumerable<object[]> GetUnaryOperatorsPairsData()
+        {
+            foreach (var unary in SyntaxRules.GetUnaryOperatorKinds())
+            {
+                foreach (var binary in SyntaxRules.GetBinaryOperatorKinds())
+                {
+                    yield return new object[] { unary, binary };
                 }
             }
         }
