@@ -17,5 +17,10 @@ steps:
   displayName: dotnet clean
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
-- script: dotnet test $(tests)
+- script: dotnet test $(tests) --logger "xunit;LogFileName=TestResults.xml"
   displayName: 'dotnet test'
+- task: PublishTestResults@2
+  displayName: 'Public test results to Azure Pipelines'
+  inputs:
+    testResultsFormat: 'xUnit'
+    testResultsFiles: '**/TestResults.xml'
