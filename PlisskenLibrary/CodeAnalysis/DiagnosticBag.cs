@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PlisskenLibrary.CodeAnalysis.Syntax;
+using PlisskenLibrary.CodeAnalysis.Text;
 
 namespace PlisskenLibrary.CodeAnalysis
 {

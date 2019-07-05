@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using PlisskenLibrary.CodeAnalysis;
 using PlisskenLibrary.CodeAnalysis.Binding;
 using PlisskenLibrary.CodeAnalysis.Syntax;
+using PlisskenLibrary.CodeAnalysis.Text;
 
 namespace PlisskenLibrary
 {
@@ -22,33 +23,51 @@ namespace PlisskenLibrary
         {
             var showTree = false;
             var variables = new Dictionary<VariableSymbol, object>();
+            var textBuilder = new StringBuilder();
             while (true)
             {
-                Console.Write("> ");
-                var line = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(line))
-                    return;
+                if (textBuilder.Length == 0)
+                    Console.Write("> ");
+                else
+                    Console.Write("| ");
 
-                if (line == "#showTree")
+                var input = Console.ReadLine();
+                var isBlank = string.IsNullOrWhiteSpace(input);
+
+                if (textBuilder.Length == 0)
                 {
-                    showTree = !showTree;
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.WriteLine(showTree ? "showing parse trees." : "not showing parse trees.");
-                    Console.ResetColor();
-                    continue;
+                    if (isBlank) break;
+                    else if (input == "#showTree")
+                    {
+                        showTree = !showTree;
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.WriteLine(showTree ? "showing parse trees." : "not showing parse trees.");
+                        Console.ResetColor();
+                        continue;
+                    }
+                    else if (input == "#cls")
+                    {
+                        Console.Clear();
+                        continue;
+                    }
                 }
+                textBuilder.AppendLine(input);
+                var text = textBuilder.ToString();
+                var syntaxTree = SyntaxTree.Parse(text);
+                if (!isBlank && syntaxTree.Diagnostics.Any())
+                    continue;
 
-                var syntaxTree = SyntaxTree.Parse(line);
                 var compiler = new Compilation(syntaxTree);
                 var result = compiler.Evaluate(variables);
                 var diagnostics = result.Diagnostics;
 
-                if (showTree) PrettyPrint(syntaxTree.Root);
-                else if (line == "#cls")
+                if (showTree)
                 {
-                    Console.Clear();
-                    continue;
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    syntaxTree.Root.WriteTo(Console.Out);
+                    Console.ResetColor();
                 }
+
 
                 if (!diagnostics.Any())
                 {
@@ -58,14 +77,23 @@ namespace PlisskenLibrary
                 {
                     foreach (var diagnostic in diagnostics)
                     {
+                        var lineIndex = syntaxTree.Text.GetLineIndex(diagnostic.Span.Start);
+                        var lineNumber = lineIndex + 1;
+                        var line = syntaxTree.Text.Lines[lineIndex];
+                        var character = diagnostic.Span.Start - line.Start + 1;
+
                         Console.WriteLine();
                         Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write($"({lineNumber}, {character}):");
                         Console.WriteLine(diagnostic);
                         Console.ResetColor();
 
-                        var prefix = line.Substring(0, diagnostic.Span.Start);
-                        var error = line.Substring(diagnostic.Span.Start, diagnostic.Span.Length);
-                        var suffix = line.Substring(diagnostic.Span.End);
+                        var prefixSpan = TextSpan.FromBounds(line.Start, diagnostic.Span.Start);
+                        var suffixSpan = TextSpan.FromBounds(diagnostic.Span.End, line.End);
+
+                        var prefix = syntaxTree.Text.ToString(prefixSpan);
+                        var error = syntaxTree.Text.ToString(diagnostic.Span);
+                        var suffix = syntaxTree.Text.ToString(suffixSpan);
 
                         Console.Write("    ");
                         Console.Write(prefix);
@@ -76,40 +104,9 @@ namespace PlisskenLibrary
                     }
                     Console.WriteLine();
                 }
+
+                textBuilder.Clear();
             }
-        }
-
-        /// <summary>
-        /// PrettyPrint intended to write a tree similar to unix tree command
-        /// </summary>
-        /// <param name="node">current node</param>
-        /// <param name="indent">indent level</param>
-        /// path/to/folder/
-        /// ├── a-first.html
-        /// ├── b-second.txt
-        /// ├── subfolder
-        /// │   ├── readme.txt
-        /// │   ├── code.cpp
-        /// │   └── code.h
-        /// └── z-last-file.txt
-        static void PrettyPrint(SyntaxNode node, string indent = "", bool isLast = true)
-        {
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            var mark = isLast ? "└─" : "├─";
-            Console.Write(indent);
-            Console.Write(mark);
-            Console.Write(node.Kind);
-            if (node is SyntaxToken t && t.Value != null)
-                Console.Write($" {t.Value}");
-
-            Console.WriteLine();
-
-            var lastChild = node.GetChildren().LastOrDefault();
-            indent += isLast ? "   " : "│  ";
-
-            foreach (var child in node.GetChildren())
-                PrettyPrint(child, indent, child == lastChild);
-            Console.ResetColor();
         }
     }
 

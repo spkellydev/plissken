@@ -1,4 +1,6 @@
-﻿namespace PlisskenLibrary.CodeAnalysis
+﻿using PlisskenLibrary.CodeAnalysis.Text;
+
+namespace PlisskenLibrary.CodeAnalysis
 {
     public sealed class Diagnostic
     {
