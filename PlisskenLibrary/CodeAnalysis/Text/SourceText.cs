@@ -56,18 +56,21 @@ namespace PlisskenLibrary.CodeAnalysis.Text
                 var lineBreakWidth = GetLineBreakWidth(text, position);
                 if (lineBreakWidth == 0)
                 {
+                    // if there is not a linebreak we can advance
                     position++;
                 }
                 else
                 {
+                    // if there is a linebreak add the line
                     AddLine(result, sourceText, position, lineStart, lineBreakWidth);
                     position += lineBreakWidth;
                     lineStart = position;
                 }
             }
 
-            if (position > lineStart)
+            if (position >= lineStart)
             {
+                // beginning of an empty line, we should add the line
                 AddLine(result, sourceText, position, lineStart, 0);
             }
 
