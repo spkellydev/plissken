@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PlisskenLibrary.CodeAnalysis.Text;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -6,18 +7,26 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
 {
     public sealed class SyntaxTree
     {
-        public SyntaxTree(ImmutableArray<Diagnostic> diagnostics, ExpressionSyntax root, SyntaxToken eofToken)
+        public SyntaxTree(SourceText text, ImmutableArray<Diagnostic> diagnostics, ExpressionSyntax root, SyntaxToken eofToken)
         {
             Diagnostics = diagnostics.ToImmutableArray();
+            Text = text;
             Root = root;
             EOFToken = eofToken;
         }
 
+        public SourceText Text { get; }
         public ImmutableArray<Diagnostic> Diagnostics { get; }
         public ExpressionSyntax Root { get; }
         public SyntaxToken EOFToken { get; }
 
         public static SyntaxTree Parse(string text)
+        {
+            var sourceText = SourceText.From(text);
+            return Parse(sourceText);
+        }
+
+        public static SyntaxTree Parse(SourceText text)
         {
             var parser = new Parser(text);
             return parser.Parse();
@@ -29,7 +38,7 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        public static IEnumerable<SyntaxToken> ParseTokens(string text)
+        public static IEnumerable<SyntaxToken> ParseTokens(SourceText text)
         {
             var lexer = new Lexer(text);
             while (true)
@@ -38,6 +47,12 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
                 if (token.Kind == SyntaxKind.EOFToken) break;
                 yield return token;
             }
+        }
+
+        public static IEnumerable<SyntaxToken> ParseTokens(string text)
+        {
+            var sourceText = SourceText.From(text);
+            return ParseTokens(sourceText);
         }
     }
 }

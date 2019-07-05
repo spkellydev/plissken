@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PlisskenLibrary.CodeAnalysis.Text;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 
 namespace PlisskenLibrary.CodeAnalysis.Syntax
@@ -6,10 +7,11 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
     internal sealed class Parser
     {
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
+        private readonly SourceText _text;
         private readonly ImmutableArray<SyntaxToken> _tokens;
         private int _position;
 
-        public Parser(string text)
+        public Parser(SourceText text)
         {
             var tokens = new List<SyntaxToken>();
             var lexer = new Lexer(text);
@@ -24,6 +26,7 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
                 }
             } while (token.Kind != SyntaxKind.EOFToken);
 
+            _text = text;
             _tokens = tokens.ToImmutableArray();
             _diagnostics.AddRange(lexer.Diagnostics);
         }
@@ -59,7 +62,7 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
         {
             var expression = ParseExpression();
             var eofToken = MatchToken(SyntaxKind.EOFToken);
-            return new SyntaxTree(_diagnostics.ToImmutableArray(), expression, eofToken);
+            return new SyntaxTree(_text, _diagnostics.ToImmutableArray(), expression, eofToken);
         }
 
         private ExpressionSyntax ParseExpression(int parentPrecedence = 0)

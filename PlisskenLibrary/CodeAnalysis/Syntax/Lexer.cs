@@ -5,15 +5,15 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
 {
     internal sealed class Lexer
     {
-        private readonly string _text;
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
+        private readonly SourceText _text;
 
         private int _position;
         private int _start;
-        private object _value;
         private SyntaxKind _kind;
+        private object _value;
 
-        public Lexer(string text)
+        public Lexer(SourceText text)
         {
             _text = text;
         }
@@ -159,11 +159,11 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
                 }
             }
 
-            var text = SyntaxRules.GetText(_kind);
             var length = _position - _start;
+            var text = SyntaxRules.GetText(_kind);
             if (text == null)
             {
-                text = _text.Substring(_start, length);
+                text = _text.ToString(_start, length);
             }
             return new SyntaxToken(_kind, _start, text, _value);
         }
@@ -182,9 +182,9 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
                 _position++;
 
             var length = _position - _start;
-            var text = _text.Substring(_start, length);
+            var text = _text.ToString(_start, length);
             if (!int.TryParse(text, out var value))
-                _diagnostics.ReportInvalidNumber(new TextSpan(_start, length), _text, typeof(int));
+                _diagnostics.ReportInvalidNumber(new TextSpan(_start, length), text, typeof(int));
 
             _value = value;
             _kind = SyntaxKind.NumberToken;
@@ -196,7 +196,7 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
                 _position++;
 
             var length = _position - _start;
-            var text = _text.Substring(_start, length);
+            var text = _text.ToString(_start, length);
             _kind = SyntaxRules.GetKeywordKind(text);
         }
     }
