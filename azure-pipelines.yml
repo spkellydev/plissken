@@ -11,6 +11,10 @@ variables:
   tests: './PlisskenLibrary.Tests/PlisskenLibrary.Tests.csproj'
 
 steps:
+- script: dotnet restore
+  displayName: dotnet restore
+- script: dotnet clean
+  displayName: dotnet clean
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 - script: dotnet test $(tests)
