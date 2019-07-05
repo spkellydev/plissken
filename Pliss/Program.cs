@@ -26,10 +26,12 @@ namespace PlisskenLibrary
             var textBuilder = new StringBuilder();
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 if (textBuilder.Length == 0)
-                    Console.Write("> ");
+                    Console.Write("» ");
                 else
-                    Console.Write("| ");
+                    Console.Write("· ");
+                Console.ResetColor();
 
                 var input = Console.ReadLine();
                 var isBlank = string.IsNullOrWhiteSpace(input);
@@ -71,7 +73,10 @@ namespace PlisskenLibrary
 
                 if (!diagnostics.Any())
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write("⌠»⌡ ");
                     Console.WriteLine(result.Value);
+                    Console.ResetColor();
                 }
                 else
                 {
