@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PlisskenLibrary.CodeAnalysis
+namespace PlisskenLibrary.CodeAnalysis.Text
 {
     public struct TextSpan
     {

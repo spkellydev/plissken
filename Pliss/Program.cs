@@ -43,7 +43,12 @@ namespace PlisskenLibrary
                 var result = compiler.Evaluate(variables);
                 var diagnostics = result.Diagnostics;
 
-                if (showTree) PrettyPrint(syntaxTree.Root);
+                if (showTree)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    syntaxTree.Root.WriteTo(Console.Out);
+                    Console.ResetColor();
+                }
                 else if (line == "#cls")
                 {
                     Console.Clear();
@@ -77,39 +82,6 @@ namespace PlisskenLibrary
                     Console.WriteLine();
                 }
             }
-        }
-
-        /// <summary>
-        /// PrettyPrint intended to write a tree similar to unix tree command
-        /// </summary>
-        /// <param name="node">current node</param>
-        /// <param name="indent">indent level</param>
-        /// path/to/folder/
-        /// ├── a-first.html
-        /// ├── b-second.txt
-        /// ├── subfolder
-        /// │   ├── readme.txt
-        /// │   ├── code.cpp
-        /// │   └── code.h
-        /// └── z-last-file.txt
-        static void PrettyPrint(SyntaxNode node, string indent = "", bool isLast = true)
-        {
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            var mark = isLast ? "└─" : "├─";
-            Console.Write(indent);
-            Console.Write(mark);
-            Console.Write(node.Kind);
-            if (node is SyntaxToken t && t.Value != null)
-                Console.Write($" {t.Value}");
-
-            Console.WriteLine();
-
-            var lastChild = node.GetChildren().LastOrDefault();
-            indent += isLast ? "   " : "│  ";
-
-            foreach (var child in node.GetChildren())
-                PrettyPrint(child, indent, child == lastChild);
-            Console.ResetColor();
         }
     }
 
