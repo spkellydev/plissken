@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlisskenCompiler", "Plissken\PlisskenCompiler.csproj", "{D75CE556-EDB3-40ED-B836-168DAA5F12A7}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4BE30E19-75EA-4493-8046-11FB5ABCE043}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines.yml = azure-pipelines.yml
@@ -15,16 +13,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlisskenLibrary", "Plissken
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlisskenLibrary.Tests", "PlisskenLibrary.Tests\PlisskenLibrary.Tests.csproj", "{0A3BBEDE-6BC7-4BD4-849F-97BA6E9894DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pliss", "Pliss\Pliss.csproj", "{504876E9-1262-4EB1-8046-71E8EC124385}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D75CE556-EDB3-40ED-B836-168DAA5F12A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D75CE556-EDB3-40ED-B836-168DAA5F12A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D75CE556-EDB3-40ED-B836-168DAA5F12A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D75CE556-EDB3-40ED-B836-168DAA5F12A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EBCA8A6A-ABAE-4A43-B43E-672CB9FEAFAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EBCA8A6A-ABAE-4A43-B43E-672CB9FEAFAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBCA8A6A-ABAE-4A43-B43E-672CB9FEAFAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{0A3BBEDE-6BC7-4BD4-849F-97BA6E9894DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A3BBEDE-6BC7-4BD4-849F-97BA6E9894DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A3BBEDE-6BC7-4BD4-849F-97BA6E9894DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{504876E9-1262-4EB1-8046-71E8EC124385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{504876E9-1262-4EB1-8046-71E8EC124385}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{504876E9-1262-4EB1-8046-71E8EC124385}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{504876E9-1262-4EB1-8046-71E8EC124385}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
