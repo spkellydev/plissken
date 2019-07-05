@@ -23,7 +23,8 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
         }
 
         /// <summary>
-        /// ParseTokens will return tokenized text except the EOF token
+        /// ParseTokens will return tokenized text except the EOF token. This method can be useful,
+        /// for example, to ensure a given token has a valid identifier
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>

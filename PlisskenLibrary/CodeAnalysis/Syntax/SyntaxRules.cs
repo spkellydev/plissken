@@ -2,7 +2,7 @@
 
 namespace PlisskenLibrary.CodeAnalysis.Syntax
 {
-    internal static class SyntaxRules
+    public static class SyntaxRules
     {
         /// <summary>
         /// Get the precedence for the unary operator
@@ -69,6 +69,43 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
                     return SyntaxKind.FalseKeyword;
                 default:
                     return SyntaxKind.IdentifierToken;
+            }
+        }
+
+        public static string GetText(SyntaxKind kind)
+        {
+            switch(kind)
+            {
+                case SyntaxKind.PlusToken:
+                    return "+";
+                case SyntaxKind.MinusToken:
+                    return "-";
+                case SyntaxKind.StarToken:
+                    return "*";
+                case SyntaxKind.ForwardSlashToken:
+                    return "/";
+                case SyntaxKind.OpenParenToken:
+                    return "(";
+                case SyntaxKind.CloseParenToken:
+                    return ")";
+                case SyntaxKind.BangToken:
+                    return "!";
+                case SyntaxKind.AmpersandAmpersandToken:
+                    return "&&";
+                case SyntaxKind.PipePipeToken:
+                    return "||";
+                case SyntaxKind.EqualToken:
+                    return "=";
+                case SyntaxKind.EqualEqualToken:
+                    return "==";
+                case SyntaxKind.BangEqualToken:
+                    return "!=";
+                case SyntaxKind.FalseKeyword:
+                    return "false";
+                case SyntaxKind.TrueKeyword:
+                    return "true";
+                default:
+                    return null;
             }
         }
     }
