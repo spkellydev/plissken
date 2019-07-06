@@ -13,7 +13,7 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
             var root = parser.ParseCompliationUnit();
             var diagnostics = parser.Diagnostics.ToImmutableArray();
 
-            Diagnostics = diagnostics.ToImmutableArray();
+            Diagnostics = diagnostics;
             Text = text;
             Root = root;
         }

@@ -27,6 +27,7 @@ Plissken is an attempt at creating a functional language to be used interoperati
 	- [ ] if-else
 	- [ ] while
 	- [ ] for
+	- [ ] functions
 - [ ] testing
 - [ ] Everything else
 

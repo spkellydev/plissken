@@ -12,9 +12,8 @@ namespace PlisskenLibrary.CodeAnalysis
     {
         private BoundGlobalScope _globalScope;
         public Compilation(SyntaxTree syntaxTree)
-        {
-            SyntaxTree = syntaxTree;
-        }
+            : this(null, syntaxTree)
+        {}
 
         private Compilation(Compilation previous, SyntaxTree syntaxTree)
         {
