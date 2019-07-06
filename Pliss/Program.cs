@@ -26,7 +26,7 @@ namespace PlisskenLibrary
             var textBuilder = new StringBuilder();
             while (true)
             {
-                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 if (textBuilder.Length == 0)
                     Console.Write("» ");
                 else
@@ -73,7 +73,7 @@ namespace PlisskenLibrary
 
                 if (!diagnostics.Any())
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.Write("⌠»⌡ ");
                     Console.WriteLine(result.Value);
                     Console.ResetColor();

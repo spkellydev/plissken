@@ -84,6 +84,7 @@ namespace PlisskenLibrary.Tests.CodeAnalysis.Syntax
                 //    a
                 using (var e = new AssertingEnumerator(expression))
                 {
+                    e.AssertNode(SyntaxKind.CompliationUnit);
                     e.AssertNode(SyntaxKind.BinaryExpression);
                         e.AssertNode(SyntaxKind.UnaryExpression);
                             e.AssertToken(unaryKind, unaryText);
@@ -103,6 +104,7 @@ namespace PlisskenLibrary.Tests.CodeAnalysis.Syntax
                 //   a     b
                 using (var e = new AssertingEnumerator(expression))
                 {
+                    e.AssertNode(SyntaxKind.CompliationUnit);
                     e.AssertNode(SyntaxKind.UnaryExpression);
                         e.AssertToken(unaryKind, unaryText);
                         e.AssertNode(SyntaxKind.BinaryExpression);

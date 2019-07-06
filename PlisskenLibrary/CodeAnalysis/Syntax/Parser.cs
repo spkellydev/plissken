@@ -1,4 +1,5 @@
 ﻿using PlisskenLibrary.CodeAnalysis.Text;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
@@ -9,6 +10,7 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
         private readonly SourceText _text;
         private readonly ImmutableArray<SyntaxToken> _tokens;
+
         private int _position;
 
         public Parser(SourceText text)
@@ -58,11 +60,11 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
             return new SyntaxToken(kind, Current.Position, null, null);
         }
 
-        public SyntaxTree Parse()
+        public CompliationUnitSyntax ParseCompliationUnit()
         {
             var expression = ParseExpression();
             var eofToken = MatchToken(SyntaxKind.EOFToken);
-            return new SyntaxTree(_text, _diagnostics.ToImmutableArray(), expression, eofToken);
+            return new CompliationUnitSyntax(expression, eofToken);
         }
 
         private ExpressionSyntax ParseExpression(int parentPrecedence = 0)
