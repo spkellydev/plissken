@@ -68,9 +68,15 @@ namespace PlisskenLibrary.CodeAnalysis
             Report(span, message);
         }
 
-        internal void ReportCannotConvert(TextSpan span, Type boundExpressionType, Type variableType)
+        public void ReportCannotConvert(TextSpan span, Type boundExpressionType, Type variableType)
         {
             var message = $"Cannot convert type'{boundExpressionType}' to type {variableType}";
+            Report(span, message);
+        }
+
+        internal void ReportCannotAssign(TextSpan span, string name)
+        {
+            var message = $"Variable '{name}' is readonly, cannot re-assign";
             Report(span, message);
         }
     }

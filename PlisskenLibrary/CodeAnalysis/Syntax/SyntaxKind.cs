@@ -24,6 +24,8 @@
         BangEqualToken, // !=
         
         // keywords
+        LetKeyword, // let
+        VarKeyword, // var
         FalseKeyword, // false
         TrueKeyword, // true
         
@@ -32,6 +34,7 @@
         
         // Statements
         BlockStatement,
+        VariableDeclaration,
         ExpressionStatement,
 
         // expressions

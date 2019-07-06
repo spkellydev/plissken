@@ -69,11 +69,25 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
 
         private StatementSyntax ParseStatement()
         {
-            if (Current.Kind == SyntaxKind.OpenBraceToken)
+            switch (Current.Kind)
             {
-                return ParseBlockStatement();
+                case SyntaxKind.OpenBraceToken:
+                    return ParseBlockStatement();
+                case SyntaxKind.LetKeyword:
+                case SyntaxKind.VarKeyword:
+                    return ParseVariableDeclaration();
             }
             return ParseExpressionStatement();
+        }
+
+        private VariableDeclarationSyntax ParseVariableDeclaration()
+        {
+            var expected = Current.Kind == SyntaxKind.LetKeyword ? SyntaxKind.LetKeyword : SyntaxKind.VarKeyword;
+            var keyword = MatchToken(expected);
+            var identifier = MatchToken(SyntaxKind.IdentifierToken);
+            var equals = MatchToken(SyntaxKind.EqualToken);
+            var initializer = ParseExpression();
+            return new VariableDeclarationSyntax(keyword, identifier, equals, initializer);
         }
 
         private BlockStatementSyntax ParseBlockStatement()
