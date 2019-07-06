@@ -16,7 +16,7 @@ namespace PlisskenLibrary.Tests.CodeAnalysis.Syntax
             var op2Text = SyntaxRules.GetText(op2);
             var text = $"a {op1Text} b {op2Text} c";
 
-            var expression = SyntaxTree.Parse(text).Root;
+            var expression = ParseExpression(text);
 
             if (op1Precedence >= op2Precedence)
             {
@@ -73,7 +73,7 @@ namespace PlisskenLibrary.Tests.CodeAnalysis.Syntax
             var binaryText = SyntaxRules.GetText(binaryKind);
             var text = $"{unaryText} a {binaryText} b";
 
-            var expression = SyntaxTree.Parse(text).Root;
+            var expression = ParseExpression(text);
 
             if (unaryPrecedence <= binaryPrecedence)
             {
@@ -84,7 +84,6 @@ namespace PlisskenLibrary.Tests.CodeAnalysis.Syntax
                 //    a
                 using (var e = new AssertingEnumerator(expression))
                 {
-                    e.AssertNode(SyntaxKind.CompliationUnit);
                     e.AssertNode(SyntaxKind.BinaryExpression);
                         e.AssertNode(SyntaxKind.UnaryExpression);
                             e.AssertToken(unaryKind, unaryText);
@@ -104,7 +103,6 @@ namespace PlisskenLibrary.Tests.CodeAnalysis.Syntax
                 //   a     b
                 using (var e = new AssertingEnumerator(expression))
                 {
-                    e.AssertNode(SyntaxKind.CompliationUnit);
                     e.AssertNode(SyntaxKind.UnaryExpression);
                         e.AssertToken(unaryKind, unaryText);
                         e.AssertNode(SyntaxKind.BinaryExpression);
@@ -115,6 +113,11 @@ namespace PlisskenLibrary.Tests.CodeAnalysis.Syntax
                                 e.AssertToken(SyntaxKind.IdentifierToken, "b");
                 }
             }
+        }
+
+        private static ExpressionSyntax ParseExpression(string text)
+        {
+            return SyntaxTree.Parse(text).Root.Expression;
         }
 
         public static IEnumerable<object[]> GetBinaryOperatorsPairsData()
