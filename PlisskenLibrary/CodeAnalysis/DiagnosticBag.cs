@@ -46,19 +46,19 @@ namespace PlisskenLibrary.CodeAnalysis
 
         public void ReportUndefinedUnaryOperator(TextSpan span, string operatorTtext, Type type)
         {
-            var message = $"Unary operator '{operatorTtext}' is not defined for type {type}";
+            var message = $"Unary operator '{operatorTtext}' is not defined for type '{type}'";
             Report(span, message);
         }
 
         public void ReportUndefinedBinaryOperator(TextSpan span, string text, Type leftType, Type rightType)
         {
-            var message = $"Binary operator '{text}' is not defined for type {leftType} and {rightType}";
+            var message = $"Binary operator '{text}' is not defined for type '{leftType}' and '{rightType}'";
             Report(span, message);
         }
 
         public void ReportUndefinedName(TextSpan span, string name)
         {
-            var message = $"Variable '{name}' doesn't exist";
+            var message = $"Variable '{name}' is not declared";
             Report(span, message);
         }
 
@@ -70,7 +70,7 @@ namespace PlisskenLibrary.CodeAnalysis
 
         public void ReportCannotConvert(TextSpan span, Type boundExpressionType, Type variableType)
         {
-            var message = $"Cannot convert type'{boundExpressionType}' to type {variableType}";
+            var message = $"Cannot convert type '{boundExpressionType}' to type {variableType}";
             Report(span, message);
         }
 
