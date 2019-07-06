@@ -81,6 +81,11 @@ namespace PlisskenLibrary.CodeAnalysis.Binding
             }
         }
 
+        /// <summary>
+        /// Binds a variable declaration to a bound expression
+        /// </summary>
+        /// <param name="syntax"></param>
+        /// <returns></returns>
         private BoundVariableDeclaration BindVariableDeclaration(VariableDeclarationSyntax syntax)
         {
             var name = syntax.Identifier.Text;
@@ -152,6 +157,12 @@ namespace PlisskenLibrary.CodeAnalysis.Binding
             return new BoundLiteralExpression(value);
         }
 
+        /// <summary>
+        /// Find the bound name expression for an already declared variable
+        /// </summary>
+        /// <param name="syntax"></param>
+        /// <returns></returns>
+        /// <see cref = "PlisskenLibrary.Tests.EvaluatorTest" />
         private BoundExpression BindNameExpression(NameExpressionSyntax syntax)
         {
             var name = syntax.IdentifierToken.Text;
@@ -165,6 +176,12 @@ namespace PlisskenLibrary.CodeAnalysis.Binding
             return new BoundVariableExpression(variable);
         }
 
+        /// <summary>
+        /// Find the bound expression for an assignment expression
+        /// </summary>
+        /// <param name="syntax"></param>
+        /// <returns></returns>
+        /// <see cref = "PlisskenLibrary.Tests.EvaluatorTest" />
         private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax)
         {
             var name = syntax.IdentifierToken.Text;
@@ -190,6 +207,11 @@ namespace PlisskenLibrary.CodeAnalysis.Binding
             return new BoundAssignmentExpression(variable, boundExpression);
         }
 
+        /// <summary>
+        /// We should be able to make type-consistent unary operations
+        /// </summary>
+        /// <param name="syntax"></param>
+        /// <returns></returns>
         private BoundExpression BindUnaryExpression(UnaryExpressionSyntax syntax)
         {
             var boundOperand = BindExpression(syntax.Operand);
@@ -197,13 +219,18 @@ namespace PlisskenLibrary.CodeAnalysis.Binding
 
             if (boundOperator == null)
             {
-                _diagnostics.ReportUndefinedUnaryOperator(syntax.OperatorToken.Span, syntax.OperatorToken.Text, boundOperator.Type);
+                _diagnostics.ReportUndefinedUnaryOperator(syntax.OperatorToken.Span, syntax.OperatorToken.Text, boundOperand.Type);
                 return boundOperand;
             }
 
             return new BoundUnaryExpression(boundOperator, boundOperand);
         }
 
+        /// <summary>
+        /// We should be able to make type-consistent binary operations
+        /// </summary>
+        /// <param name="syntax"></param>
+        /// <returns></returns>
         private BoundExpression BindBinaryExpression(BinaryExpressionSyntax syntax)
         {
             var boundLeft = BindExpression(syntax.Left);
