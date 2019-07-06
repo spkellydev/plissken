@@ -79,14 +79,36 @@ namespace PlisskenLibrary.CodeAnalysis.Binding
             }
         }
 
+        private BoundVariableDeclaration BindVariableDeclaration(VariableDeclarationSyntax syntax)
+        {
+            var name = syntax.Identifier.Text;
+            var isReadOnly = syntax.Keyword.Kind == SyntaxKind.LetKeyword;
+            var initializer = BindExpression(syntax.Initializer);
+            var variable = new VariableSymbol(name, isReadOnly, initializer.Type);
+
+            if (!_scope.TryDeclare(variable))
+            {
+                _diagnostics.ReportVariableAlreadyDeclared(syntax.Identifier.Span, name);
+            }
+
+            return new BoundVariableDeclaration(variable, initializer);
+        }
+
+        /// <summary>
+        /// Block statements need to be bound for evaluation. Everytime statement is nested, we need to update the scope
+        /// </summary>
+        /// <param name="syntax"></param>
+        /// <returns></returns>
         private BoundBlockStatement BindBlockStatement(BlockStatementSyntax syntax)
         {
             var statements = ImmutableArray.CreateBuilder<BoundStatement>();
+            _scope = new BoundScope(_scope);
             foreach(var statementSyntax in syntax.Statements)
             {
                 var statement = BindStatement(statementSyntax);
                 statements.Add(statement);
             }
+            _scope = _scope.Parent;
             return new BoundBlockStatement(statements.ToImmutable());
         }
 
