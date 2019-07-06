@@ -35,10 +35,25 @@ namespace PlisskenLibrary.Tests.CodeAnalysis
         [InlineData("{ var a = 0 (a = 10) * a }", 100)]
         public void EvaluatorText_Expression_Evaluated(string text, object expectedResult)
         {
+            AssertValue(text, expectedResult);
+        }
+        private static EvaluationResult GetCompilationEvaluation(string text)
+        {
             var syntaxTree = SyntaxTree.Parse(text);
             var compilation = new Compilation(syntaxTree);
             var variables = new Dictionary<VariableSymbol, object>();
             var result = compilation.Evaluate(variables);
+            return result;
+        }
+
+        /// <summary>
+        /// Assert that a value is the expected result and there are no diagnostic messages
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="expectedResult"></param>
+        private static void AssertValue(string text, object expectedResult)
+        {
+            var result = GetCompilationEvaluation(text);
 
             Assert.Empty(result.Diagnostics);
             Assert.Equal(result.Value, expectedResult);
