@@ -17,5 +17,4 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
 
         public override SyntaxKind Kind => SyntaxKind.AssignmentExpression;
     }
-
 }

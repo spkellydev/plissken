@@ -7,17 +7,20 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
 {
     public sealed class SyntaxTree
     {
-        public SyntaxTree(SourceText text, ImmutableArray<Diagnostic> diagnostics, ExpressionSyntax root, SyntaxToken eofToken)
+        private SyntaxTree(SourceText text)
         {
+            var parser = new Parser(text);
+            var root = parser.ParseCompliationUnit();
+            var diagnostics = parser.Diagnostics.ToImmutableArray();
+
             Diagnostics = diagnostics.ToImmutableArray();
             Text = text;
             Root = root;
-            EOFToken = eofToken;
         }
 
         public SourceText Text { get; }
         public ImmutableArray<Diagnostic> Diagnostics { get; }
-        public ExpressionSyntax Root { get; }
+        public CompliationUnitSyntax Root { get; }
         public SyntaxToken EOFToken { get; }
 
         public static SyntaxTree Parse(string text)
@@ -28,8 +31,7 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
 
         public static SyntaxTree Parse(SourceText text)
         {
-            var parser = new Parser(text);
-            return parser.Parse();
+            return new SyntaxTree(text);
         }
 
         /// <summary>

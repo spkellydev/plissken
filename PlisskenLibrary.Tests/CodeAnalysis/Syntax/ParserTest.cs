@@ -16,7 +16,7 @@ namespace PlisskenLibrary.Tests.CodeAnalysis.Syntax
             var op2Text = SyntaxRules.GetText(op2);
             var text = $"a {op1Text} b {op2Text} c";
 
-            var expression = SyntaxTree.Parse(text).Root;
+            var expression = ParseExpression(text);
 
             if (op1Precedence >= op2Precedence)
             {
@@ -73,7 +73,7 @@ namespace PlisskenLibrary.Tests.CodeAnalysis.Syntax
             var binaryText = SyntaxRules.GetText(binaryKind);
             var text = $"{unaryText} a {binaryText} b";
 
-            var expression = SyntaxTree.Parse(text).Root;
+            var expression = ParseExpression(text);
 
             if (unaryPrecedence <= binaryPrecedence)
             {
@@ -113,6 +113,12 @@ namespace PlisskenLibrary.Tests.CodeAnalysis.Syntax
                                 e.AssertToken(SyntaxKind.IdentifierToken, "b");
                 }
             }
+        }
+
+        private static ExpressionSyntax ParseExpression(string text)
+        {
+            var statement = SyntaxTree.Parse(text).Root.Statement;
+            return Assert.IsType<ExpressionStatementSyntax>(statement).Expression;
         }
 
         public static IEnumerable<object[]> GetBinaryOperatorsPairsData()

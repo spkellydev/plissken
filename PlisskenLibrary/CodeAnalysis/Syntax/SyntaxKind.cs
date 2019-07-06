@@ -13,6 +13,8 @@
         ForwardSlashToken, // /
         OpenParenToken, // (
         CloseParenToken, // )
+        OpenBraceToken,  // {
+        CloseBraceToken, // }
         IdentifierToken,
         BangToken, // !
         AmpersandAmpersandToken, // &&
@@ -20,9 +22,21 @@
         EqualToken, // =
         EqualEqualToken, // ==
         BangEqualToken, // !=
+        
         // keywords
+        LetKeyword, // let
+        VarKeyword, // var
         FalseKeyword, // false
         TrueKeyword, // true
+        
+        // units
+        CompliationUnit,
+        
+        // Statements
+        BlockStatement,
+        VariableDeclaration,
+        ExpressionStatement,
+
         // expressions
         LiteralExpression,
         BinaryExpression,

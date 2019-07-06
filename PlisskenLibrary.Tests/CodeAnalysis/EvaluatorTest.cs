@@ -32,7 +32,7 @@ namespace PlisskenLibrary.Tests.CodeAnalysis
         [InlineData("false", false)]
         [InlineData("!true", false)]
         [InlineData("!false", true)]
-        [InlineData("(a = 10) * a", 100)]
+        [InlineData("{ var a = 0 (a = 10) * a }", 100)]
         public void EvaluatorText_Expression_Evaluated(string text, object expectedResult)
         {
             var syntaxTree = SyntaxTree.Parse(text);

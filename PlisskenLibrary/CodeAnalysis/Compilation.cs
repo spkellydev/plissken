@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading;
 using PlisskenLibrary.CodeAnalysis.Binding;
 using PlisskenLibrary.CodeAnalysis.Syntax;
 
@@ -9,17 +10,45 @@ namespace PlisskenLibrary.CodeAnalysis
 {
     public class Compilation
     {
-        public Compilation(SyntaxTree syntax)
+        private BoundGlobalScope _globalScope;
+        public Compilation(SyntaxTree syntaxTree)
         {
-            Syntax = syntax;
+            SyntaxTree = syntaxTree;
         }
 
-        public SyntaxTree Syntax { get; }
+        private Compilation(Compilation previous, SyntaxTree syntaxTree)
+        {
+            Previous = previous;
+            SyntaxTree = syntaxTree;
+        }
+
+        public SyntaxTree SyntaxTree { get; }
+        public Compilation Previous { get; }
+
+        internal BoundGlobalScope GlobalScope
+        {
+            get
+            {
+                if (_globalScope == null)
+                {
+                    var globalScope = Binder.BindGlobalScope(Previous?.GlobalScope, SyntaxTree.Root);
+                    // ensure thread safety
+                    Interlocked.CompareExchange(ref _globalScope, globalScope, null);
+                }
+                return _globalScope;
+            }
+        }
+
+        public Compilation ContinueWith(SyntaxTree syntaxTree)
+        {
+            return new Compilation(this, syntaxTree);
+        }
+
         public EvaluationResult Evaluate(Dictionary<VariableSymbol, object> variables)
         {
-            var binder = new Binder(variables);
-            var boundExpression = binder.BindExpression(Syntax.Root);
-            var diagnostics = Syntax.Diagnostics.Concat(binder.Diagnostics).ToArray();
+            var boundExpression = GlobalScope.Statement;
+
+            var diagnostics = SyntaxTree.Diagnostics.Concat(GlobalScope.Diagnostics).ToArray();
             if (diagnostics.Any())
             {
                 return new EvaluationResult(diagnostics.ToImmutableArray(), null);

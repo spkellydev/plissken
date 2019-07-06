@@ -1,4 +1,5 @@
 ﻿using PlisskenLibrary.CodeAnalysis.Text;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -56,19 +57,33 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
         /// │   ├── code.cpp
         /// │   └── code.h
         /// └── z-last-file.txt
-        private static void PrettyPrint(TextWriter writer, SyntaxNode node, string indent = "", bool isLast = true)
+        private static void PrettyPrint(TextWriter writer, SyntaxNode node, string indent = "·", bool isLast = true)
         {
+            var isTerm = writer == Console.Out;
             var mark = isLast ? "└─" : "├─";
             writer.Write(indent);
-            writer.Write(mark);
-            writer.Write(node.Kind);
+            if (isTerm)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                writer.Write(mark);
+                Console.ResetColor();
+                Console.ForegroundColor = node is SyntaxToken ? ConsoleColor.Blue : ConsoleColor.DarkCyan;
+                writer.Write(node.Kind);
+                Console.ResetColor();
+            }
+            else
+            {
+                writer.Write(mark);
+                writer.Write(node.Kind);
+            }
+
             if (node is SyntaxToken t && t.Value != null)
                 writer.Write($" {t.Value}");
 
             writer.WriteLine();
 
             var lastChild = node.GetChildren().LastOrDefault();
-            indent += isLast ? "   " : "│  ";
+            indent += isLast ? "···" : "│··";
 
             foreach (var child in node.GetChildren())
                 PrettyPrint(writer, child, indent, child == lastChild);

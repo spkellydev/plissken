@@ -64,7 +64,6 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
                     _position++;
                     break;
                 }
-
                 case '(':
                 {
                     _kind = SyntaxKind.OpenParenToken;
@@ -74,6 +73,18 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
                 case ')':
                 {
                     _kind = SyntaxKind.CloseParenToken;
+                    _position++;
+                    break;
+                }
+                case '{':
+                {
+                    _kind = SyntaxKind.OpenBraceToken;
+                    _position++;
+                    break;
+                }
+                case '}':
+                {
+                    _kind = SyntaxKind.CloseBraceToken;
                     _position++;
                     break;
                 }

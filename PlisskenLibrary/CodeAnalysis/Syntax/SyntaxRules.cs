@@ -64,6 +64,10 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
         {
             switch(text)
             {
+                case "let":
+                    return SyntaxKind.LetKeyword;
+                case "var":
+                    return SyntaxKind.VarKeyword;
                 case "true":
                     return SyntaxKind.TrueKeyword;
                 case "false":
@@ -113,6 +117,10 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
                     return "(";
                 case SyntaxKind.CloseParenToken:
                     return ")";
+                case SyntaxKind.OpenBraceToken:
+                    return "{";
+                case SyntaxKind.CloseBraceToken:
+                    return "}";
                 case SyntaxKind.BangToken:
                     return "!";
                 case SyntaxKind.AmpersandAmpersandToken:
@@ -129,6 +137,10 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
                     return "false";
                 case SyntaxKind.TrueKeyword:
                     return "true";
+                case SyntaxKind.LetKeyword:
+                    return "let";
+                case SyntaxKind.VarKeyword:
+                    return "var";
                 default:
                     return null;
             }

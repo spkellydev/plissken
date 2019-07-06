@@ -24,12 +24,15 @@ namespace PlisskenLibrary
             var showTree = false;
             var variables = new Dictionary<VariableSymbol, object>();
             var textBuilder = new StringBuilder();
+            Compilation previous = null;
             while (true)
             {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 if (textBuilder.Length == 0)
-                    Console.Write("> ");
+                    Console.Write("» ");
                 else
-                    Console.Write("| ");
+                    Console.Write("· ");
+                Console.ResetColor();
 
                 var input = Console.ReadLine();
                 var isBlank = string.IsNullOrWhiteSpace(input);
@@ -50,6 +53,11 @@ namespace PlisskenLibrary
                         Console.Clear();
                         continue;
                     }
+                    else if (input == "#reset")
+                    {
+                        previous = null;
+                        continue;
+                    }
                 }
                 textBuilder.AppendLine(input);
                 var text = textBuilder.ToString();
@@ -57,8 +65,11 @@ namespace PlisskenLibrary
                 if (!isBlank && syntaxTree.Diagnostics.Any())
                     continue;
 
-                var compiler = new Compilation(syntaxTree);
-                var result = compiler.Evaluate(variables);
+                var compliation = previous == null
+                                      ? new Compilation(syntaxTree) :
+                                      previous.ContinueWith(syntaxTree);
+                
+                var result = compliation.Evaluate(variables);
                 var diagnostics = result.Diagnostics;
 
                 if (showTree)
@@ -71,7 +82,12 @@ namespace PlisskenLibrary
 
                 if (!diagnostics.Any())
                 {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write("⌠»⌡ ");
                     Console.WriteLine(result.Value);
+                    Console.ResetColor();
+                    // only remember successful attempts for now until diagnostics are more well developed
+                    previous = compliation;
                 }
                 else
                 {
