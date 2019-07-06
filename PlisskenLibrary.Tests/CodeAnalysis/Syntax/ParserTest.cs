@@ -117,7 +117,8 @@ namespace PlisskenLibrary.Tests.CodeAnalysis.Syntax
 
         private static ExpressionSyntax ParseExpression(string text)
         {
-            return SyntaxTree.Parse(text).Root.Expression;
+            var statement = SyntaxTree.Parse(text).Root.Statement;
+            return Assert.IsType<ExpressionStatementSyntax>(statement).Expression;
         }
 
         public static IEnumerable<object[]> GetBinaryOperatorsPairsData()

@@ -13,6 +13,8 @@
         ForwardSlashToken, // /
         OpenParenToken, // (
         CloseParenToken, // )
+        OpenBraceToken,  // {
+        CloseBraceToken, // }
         IdentifierToken,
         BangToken, // !
         AmpersandAmpersandToken, // &&
@@ -20,9 +22,18 @@
         EqualToken, // =
         EqualEqualToken, // ==
         BangEqualToken, // !=
+        
         // keywords
         FalseKeyword, // false
         TrueKeyword, // true
+        
+        // units
+        CompliationUnit,
+        
+        // Statements
+        BlockStatement,
+        ExpressionStatement,
+
         // expressions
         LiteralExpression,
         BinaryExpression,
@@ -30,7 +41,5 @@
         UnaryExpression,
         NameExpression,
         AssignmentExpression,
-        // units
-        CompliationUnit,
     }
 }

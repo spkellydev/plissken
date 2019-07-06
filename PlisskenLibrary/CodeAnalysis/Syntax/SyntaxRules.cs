@@ -113,6 +113,10 @@ namespace PlisskenLibrary.CodeAnalysis.Syntax
                     return "(";
                 case SyntaxKind.CloseParenToken:
                     return ")";
+                case SyntaxKind.OpenBraceToken:
+                    return "{";
+                case SyntaxKind.CloseBraceToken:
+                    return "}";
                 case SyntaxKind.BangToken:
                     return "!";
                 case SyntaxKind.AmpersandAmpersandToken:

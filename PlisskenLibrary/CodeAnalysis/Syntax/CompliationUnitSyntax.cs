@@ -2,15 +2,15 @@
 {
     public sealed class CompliationUnitSyntax : SyntaxNode
     {
-        public CompliationUnitSyntax(ExpressionSyntax expression, SyntaxToken eofToken)
+        public CompliationUnitSyntax(StatementSyntax statement, SyntaxToken eofToken)
         {
-            Expression = expression;
+            Statement = statement;
             EofToken = eofToken;
         }
 
         public override SyntaxKind Kind => SyntaxKind.CompliationUnit;
 
-        public ExpressionSyntax Expression { get; }
+        public StatementSyntax Statement { get; }
         public SyntaxToken EofToken { get; }
     }
 }

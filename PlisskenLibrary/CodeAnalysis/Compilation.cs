@@ -46,7 +46,7 @@ namespace PlisskenLibrary.CodeAnalysis
 
         public EvaluationResult Evaluate(Dictionary<VariableSymbol, object> variables)
         {
-            var boundExpression = GlobalScope.Expression;
+            var boundExpression = GlobalScope.Statement;
 
             var diagnostics = SyntaxTree.Diagnostics.Concat(GlobalScope.Diagnostics).ToArray();
             if (diagnostics.Any())
