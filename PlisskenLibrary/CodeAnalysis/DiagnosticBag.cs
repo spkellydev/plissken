@@ -56,9 +56,21 @@ namespace PlisskenLibrary.CodeAnalysis
             Report(span, message);
         }
 
-        internal void ReportUndefinedName(TextSpan span, string name)
+        public void ReportUndefinedName(TextSpan span, string name)
         {
             var message = $"Variable '{name}' doesn't exist";
+            Report(span, message);
+        }
+
+        public void ReportVariableAlreadyDeclared(TextSpan span, string name)
+        {
+            var message = $"Variable '{name}' is already declared";
+            Report(span, message);
+        }
+
+        internal void ReportCannotConvert(TextSpan span, Type boundExpressionType, Type variableType)
+        {
+            var message = $"Cannot convert type'{boundExpressionType}' to type {variableType}";
             Report(span, message);
         }
     }
