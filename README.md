@@ -21,6 +21,12 @@ Plissken is an attempt at creating a functional language to be used interoperati
 	- [x] int
 	- [x] bool
 	- [ ] everything else
+- [x] basic scoping
+- [x] variable declaration
+- [ ] statements
+	- [ ] if-else
+	- [ ] while
+	- [ ] for
 - [ ] testing
 - [ ] Everything else
 
